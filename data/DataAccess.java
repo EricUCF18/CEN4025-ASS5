@@ -12,6 +12,7 @@ import java.util.*;
 import java.util.logging.*;
 
 import week04.util.AtmLogger;
+import week04.app.Account;
 import week04.app.User;
 
 public class DataAccess {
@@ -49,16 +50,23 @@ public class DataAccess {
 	private static String DEFAULT_USER = "root";
 	private static String CONN_FMT = "jdbc:mysql://localhost/atm?user=%s&password=%s&useSSL=false";
 	private String connectionString = "";
+	
+	/**
+	 * default public Constructor
+	 * */
+	public DataAccess(){
+		
+	}
 
 	/**
-	 * private default constructor
+	 * Main constructor
 	 * 
-	 * @param username
+	 * @param m_userName
 	 *            the name of user
-	 * @param userPassword
+	 * @param m_password
 	 *            the password of user
 	 */
-	private DataAccess(String m_password, String m_userName) throws AtmDataException {
+	public DataAccess( String m_userName, String m_password) throws AtmDataException {
 		this.m_password = m_password;
 		this.m_userName = m_userName;
 		
@@ -71,10 +79,14 @@ public class DataAccess {
 		logger.info("Successfully connected to the database " + m_connect.toString());
 	}
 
-	public DataAccess() {
-	}
-
-	@SuppressWarnings("unused")
+	/**
+	 * 
+	 * @param user
+	 *            the user object
+	 * @param update
+	 *            time update
+	 * @return user
+	 */
 	private User updateUser(User user, java.sql.Date updateDate) throws AtmDataException {
 
 		try {
@@ -91,7 +103,14 @@ public class DataAccess {
 		return user;
 	}
 
-	@SuppressWarnings("unused")
+	/**
+	 * 
+	 * @param user
+	 *            the user object
+	 * @param update
+	 *            time update
+	 * @return newUser
+	 */
 	private User insertUser(User user, java.sql.Date updateDate) throws AtmDataException {
 
 		User newUser = null;
@@ -128,6 +147,9 @@ public class DataAccess {
 		return newUser;
 	}
 
+	/**
+	 * closes connection with database
+	 */
 	public void close() {
 
 		try {
@@ -137,6 +159,11 @@ public class DataAccess {
 		}
 	}
 
+	/**
+	 * connects to database
+	 * 
+	 * @throws AtmDataException
+	 */
 	public void connect() throws AtmDataException {
 
 		try {
@@ -163,6 +190,14 @@ public class DataAccess {
 
 	}
 
+	/**
+	 * deletes a user
+	 * @param id
+	 *            id of a user
+	 * @return result
+	 * 
+	 * @throws AtmDataException
+	 */
 	public boolean deleteUserById(long id) throws AtmDataException {
 
 		boolean result = false;
@@ -185,6 +220,11 @@ public class DataAccess {
 		return result;
 	}
 
+	/**
+	 * gets the connection
+	 * @return m_connect 
+	 * 				the connection value
+	 */
 	public Connection getConnection() {
 		return m_connect;
 	}
@@ -198,6 +238,14 @@ public class DataAccess {
 		return DataAccess.getInstance("root", "root");
 	}
 
+	/**
+	 * @param username
+	 *            the user name
+	 * @param password
+	 *            the password
+	 * @return m_dataAccess
+	 * 				the new dataAccess object
+	 */
 	public static DataAccess getInstance(String username, String password) throws AtmDataException {
 		if (m_dataAccess == null) {
 			m_dataAccess = new DataAccess(username, password);
@@ -206,6 +254,14 @@ public class DataAccess {
 		return m_dataAccess;
 	}
 
+	/**
+	 * gets the user by ID
+	 * @param id
+	 *            the user's id
+	 * @throws AtmDataException
+	 * 
+	 * @return user
+	 */
 	public User getUserById(long id) throws AtmDataException {
 
 		User user = null;
@@ -229,6 +285,10 @@ public class DataAccess {
 		return user;
 	}
 
+	/**
+	 * @throws AtmDataException
+	 * @return userList
+	 */
 	public List<User> getUsers() throws AtmDataException {
 		List<User> userList = new ArrayList<User>();
 		ResultSet resultset = null;
@@ -249,7 +309,14 @@ public class DataAccess {
 		return userList;
 	}
 
-	public User saveUser(User user) throws AtmDataException {
+	/**
+	 * Saves the user
+	 * @param user
+	 *            the user object
+	 * @throws AtmDataException
+	 * @return updateUser
+	 */
+	public void saveUser(User user) throws AtmDataException {
 		Calendar now = Calendar.getInstance();
 
 		User updateUser = null;
@@ -261,10 +328,45 @@ public class DataAccess {
 			updateUser = updateUser(user, updateDate);
 		}
 
-		return updateUser;
+//		return updateUser;
 	}
 
+	/**
+	 * makes it easier to do a System.out.println() command
+	 */
 	private void trace(String msg) {
 		System.out.println(msg);
+	}
+	
+	/**
+	 * saves the account for the user
+	 * @param account
+	 *            the user object
+	 */
+	public void saveAccount(Account account){
+		
+	}
+	
+	/** 
+	 * Gets Account on ID
+	 * @param id
+	 * 			gets the id of the account
+	 * @return result
+	 * 			result is the account being passed back
+	 * */
+	public Account getAccount(int id){
+		Account result = new Account();
+		
+		return result;
+	}
+	
+	/**
+	 * gets all the accounts
+	 * @return result
+	 * 			result is the list of all accounts
+	 */
+	public List<Account> getAllAccounts(){
+		List<Account> result = null;
+		return result;
 	}
 }
