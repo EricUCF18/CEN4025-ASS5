@@ -15,6 +15,7 @@ public class Account {
 	public String m_accountName;
 	public double m_balance;
 	public User m_user;
+	public long m_userId;
 	
 	/**
 	   * This is the first constructor method.
@@ -41,6 +42,16 @@ public class Account {
 		this.m_user = m_user;
 	}
 
+	public Account(User m_user, String m_accountName){
+		this.m_accountName = m_accountName;
+		this.m_user = m_user;
+	}
+	
+	public Account(User m_user, String m_accountName, double m_balance){
+		this.m_accountName = m_accountName;
+		this.m_balance = m_balance;
+		this.m_user = m_user;
+	}
 	/**
 	   * This is the equals method.
 	   * @param obj - Generic Object to compare
@@ -142,6 +153,13 @@ public class Account {
 	   */
 	public void setUser(User m_user) {
 		this.m_user = m_user;
+	}
+	/**
+	   * This is the getUserId method.
+	   * @return m_userId - nothing to see here.
+	   */
+	public long getUserId(){
+		return m_userId;
 	}
 
 	/**
